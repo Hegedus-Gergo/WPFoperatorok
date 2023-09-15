@@ -1,10 +1,8 @@
 ﻿using Microsoft.Win32;
-using Microsoft.Windows.Themes;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -25,15 +23,9 @@ namespace WpfApp2
     public partial class MainWindow : Window
     {
         List<Kifejezes> kifejezesek = new List<Kifejezes>();
-
         public MainWindow()
         {
             InitializeComponent();
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
             var fajl = new OpenFileDialog();
             if (fajl.ShowDialog() == true)
             {
@@ -90,7 +82,7 @@ namespace WpfApp2
 
                 foreach (var aktCsop in csoportok)
                 {
-                    Console.WriteLine(aktCsop.Key+":"+ aktCsop.Count());
+                    Console.WriteLine(aktCsop.Key + ":" + aktCsop.Count());
                 }
 
 
@@ -122,11 +114,11 @@ namespace WpfApp2
 
                 if (igaze)
                 {
-                    feladat2.Content = "2. feladat: Kifejezések száma: " + kifejezesek.Count + "\n3. feladat: Kifejezések maradéskos osztással: " + modokSzama + "\n4. feladat : Van ilyen kifejezés!\n5. feladat: Statisztika\nmod -> " + modokSzama + " db\n/ -> " + perek + " db\ndiv ->" + divek + " db\n- -> " + kivonas + " db\n* -> " + szorzas + " db\n+ ->" + osszeads + " db\n8. feladat: eredmenyek.txt";
+                    feladat2.Content = "2. feladat: Kifejezések száma: " + kifejezesek.Count + "\n3. feladat: Kifejezések maradéskos osztással: " + modokSzama + "\n4. feladat : Van ilyen kifejezés!\n5. feladat: Statisztika\n\tmod -> " + modokSzama + " db\n\t/ -> " + perek + " db\n\tdiv ->" + divek + " db\n\t- -> " + kivonas + " db\n\t* -> " + szorzas + " db\n\t+ ->" + osszeads + " db\n8. feladat: eredmenyek.txt";
                 }
                 else
                 {
-                    feladat2.Content = "2. feladat: Kifejezések száma: " + kifejezesek.Count + "\n3. feladat: Kifejezések maradéskos osztással: " + modokSzama + "\n4. feladat : Nincs ilyen kifejezés!\n5. feladat: Statisztika\nmod -> " + modokSzama + " db\n/ -> " + perek + " db\ndiv ->" + divek + " db\n- -> " + kivonas + " db\n* -> " + szorzas + " db\n+ ->" + osszeads + " db\n8. feladat: eredmenyek.txt";
+                    feladat2.Content = "2. feladat: Kifejezések száma: " + kifejezesek.Count + "\n3. feladat: Kifejezések maradéskos osztással: " + modokSzama + "\n4. feladat : Nincs ilyen kifejezés!\n5. feladat: Statisztika\t\nmod -> " + modokSzama + " db\n\t/ -> " + perek + " db\n\tdiv ->" + divek + " db\t\n- -> " + kivonas + " db\n\t* -> " + szorzas + " db\n\t+ ->" + osszeads + " db\n8. feladat: eredmenyek.txt";
                 }
 
                 using (StreamWriter sw = File.CreateText("eredmenyek.txt"))
@@ -137,14 +129,25 @@ namespace WpfApp2
 
                         foreach (Kifejezes ertek in kifejezesek)
                         {
-                            sw.WriteLine(ertek.SzamOperandus + " " + ertek.Szovegoperator + " " + ertek.SzamOperandus2 + " = " + ertek.Eredmeny());
+                            sw.WriteLine(ertek.SzamOperandus + " " + ertek.Szovegoperator + " " + ertek.SzamOperandus2 + " = " + Kifejezes.Eredmeny(ertek.SzamOperandus,ertek.SzamOperandus2,ertek.Szovegoperator));
                         }
                     }
                     sw.Close();
                 }
-
-
             }
+        }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string bekert = tbxmuvelet.Text;
+            string[] muvelet= bekert.Split(' ');
+            for (int i = 0; i < kifejezesek.Count; i++)
+            {
+
+                              
+                    lberedmenyek.Items.Add(muvelet[0] + " " + muvelet[1] + " " + muvelet[2] + " = " + Kifejezes.Eredmeny(Convert.ToInt32(muvelet[0]),Convert.ToInt32(muvelet[2]), muvelet[1]));
+                
+            }
+
         }
 
     }

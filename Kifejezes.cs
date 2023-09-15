@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,11 +19,11 @@ namespace WpfApp2
             this.szovegoperator = szovegoperator;
         }
 
-        public int SzamOperandus { get => szamOperandus;}
-        public int SzamOperandus2 { get => szamOperandus;}
-        public string Szovegoperator { get => szovegoperator;}
+        public int SzamOperandus { get => szamOperandus; }
+        public int SzamOperandus2 { get => szamOperandus; }
+        public string Szovegoperator { get => szovegoperator; }
 
-        public string Eredmeny()
+        public static string Eredmeny(int szamOperandus, int szamOperandus2, string szovegoperator)
         {
             if (szovegoperator == "+")
             {
@@ -55,10 +54,10 @@ namespace WpfApp2
             {
                 return "Hibás operátor!";
             }
-            else { 
+            else
+            {
                 return "Egyéb hiba!";
             }
         }
     }
 }
-
